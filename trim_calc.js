@@ -25,7 +25,7 @@
 const fs = require('fs');
 
 // read the contents of the input file
-fs.readFile('baseboards.txt', 'utf-8', (err, data) => {
+fs.readFile('headerboards.txt', 'utf-8', (err, data) => {
     if (err) {
         console.error(err);
         return;
