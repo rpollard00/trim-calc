@@ -50,14 +50,14 @@ fs.readFile('headerboards.txt', 'utf-8', (err, data) => {
         let cutArray = [];
         
         for (let index = 0; index < sortedMaterialArray.length; index++) {
-        //sortedMaterialArray.forEach((val, index, array) => {
+            // Repeatedly iterate through the array until all cuts are sorted
             if (sortedMaterialArray[index] <= remainingMaterialLength) {
                 remainingMaterialLength -= sortedMaterialArray[index];
                 cutArray.push(sortedMaterialArray[index]);
+                
                 // remove from sortedMaterialArray
                 sortedMaterialArray.splice(index, 1);
-                index = 0;
-                //elementsRemove.push(val);
+                index = 0; // need to iterate from the beginning of the list for each cut
             } 
             if (!arrayContainsCandidate(sortedMaterialArray,remainingMaterialLength)) {
                 // exit the loop
@@ -67,14 +67,14 @@ fs.readFile('headerboards.txt', 'utf-8', (err, data) => {
         cutArrays.push(cutArray);
     }
     
-    // pretty print
+    // pretty-ish print
     cutArrays.forEach((val) => console.log(`Cuts: ${val.join(', ')} : Total Length ${sumArray(val)}`));
     console.log(`\nBoards of length ${maxMaterialLength}: ${cutArrays.length}`);
     wastePercent = 100 - ((rawMaterialLength/(cutArrays.length*maxMaterialLength))*100);
     console.log(`Waste % ${wastePercent.toFixed(2)}`)
 });
 
-
+// Make sure there are still values that fit the problem
 function arrayContainsCandidate(array, value) {
     const lessthanconstraint = (x) => x <= value;
     return array.some(lessthanconstraint)
